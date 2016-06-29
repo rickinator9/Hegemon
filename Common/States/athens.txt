@@ -1,0 +1,3 @@
+athenai = {
+	capital = athens
+}

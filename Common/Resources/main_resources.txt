@@ -1,0 +1,9 @@
+wood = {
+	base_price = 3.5
+}
+gold = {
+	base_price = 10
+}
+onion = {
+	base_price = juju
+}
