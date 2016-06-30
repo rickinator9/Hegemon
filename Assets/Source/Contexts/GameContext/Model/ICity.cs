@@ -13,18 +13,23 @@ namespace Assets.Source.Contexts.GameContext.Model
         ICity MotherCity { get; set; }
 
         IState State { get; set; }
-        
-        bool IsCapital { get; } 
+
+        Vector2 Position { get; set; }
+
+        bool IsCapital { get; }
     }
 
     public class CityProperty : BaseDataParserProperty<ICity>
     {
         private string state { get; set; }
 
+        private Vector2 position { get; set; }
+
         public override ICity PopulateModel(IInjectionBinder injectionBinder)
         {
             var city = injectionBinder.GetInstance<ICity>(GameContextKeys.NewInstance);
             city.Identifier = _id;
+            city.Position = position;
             var stateManager = injectionBinder.GetInstance<BaseIdentifiableManager<IState>>();
             var stateModel = stateManager[state];
 

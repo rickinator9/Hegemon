@@ -22,7 +22,7 @@ namespace Assets.Source.Core.Parser.DataParser.Converters
             ConverterByType[Type] = this;
         }
 
-        public abstract object Convert(IParserType text);
+        public abstract object Convert(IParserType type);
 
         public abstract bool IsValueInvalid(object value);
 
