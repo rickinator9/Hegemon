@@ -7,6 +7,8 @@ namespace Assets.Source.Core.Parser.DataParser.Types
 		#region Properties
 		public const string PARSER_ARRAY = "PARSER_ARRAY";
 
+        public IParserType[] Values { get { return _types.ToArray(); } }
+
 		private readonly List<IParserType> _types;
 
 		private IParserContainingType _parent = null;

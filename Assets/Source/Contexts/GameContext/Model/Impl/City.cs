@@ -2,6 +2,7 @@
 using Assets.Source.Contexts.GameContext.Model.Managers;
 using Assets.Source.Contexts.GameContext.Model.Political;
 using Assets.Source.Core.Connections;
+using UnityEngine;
 
 namespace Assets.Source.Contexts.GameContext.Model.Impl
 {
@@ -23,6 +24,8 @@ namespace Assets.Source.Contexts.GameContext.Model.Impl
                     _oneState.Register(this);
             }
         }
+
+        public Vector2 Position { get; set; }
 
         public bool IsCapital { get { return State.Capital == this; } }
     }

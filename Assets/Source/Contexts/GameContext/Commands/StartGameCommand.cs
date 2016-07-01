@@ -31,6 +31,7 @@ namespace Assets.Source.Contexts.GameContext.Commands
         {
             var floatConverter = new FloatConverter();
             var stringConverter = new StringConverter();
+            var vector2Converter = new Vector2Converter();                                       
 
             LoadResourcesDispatcher.Dispatch();
             LoadStatesDispatcher.Dispatch();
