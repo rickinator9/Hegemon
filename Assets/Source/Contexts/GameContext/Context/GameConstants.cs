@@ -7,7 +7,7 @@ namespace Assets.Source.Contexts.GameContext.Context
     {
         public struct Directories
         {
-            public static readonly string Root = Application.dataPath + @"/../";
+            public static string Root { get; set; }
 
             public static readonly string Common = Root + @"Common/";
             public static readonly string CommonCities = Common + @"Cities/";

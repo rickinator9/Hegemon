@@ -6,7 +6,7 @@ using Assets.Source.Contexts.GameContext.Model.Political.Impl;
 
 namespace Assets.Source.Contexts.GameContext.Commands.Loading
 {
-    public class LoadStatesCommand : BaseLoadCommand<IState, StateProperty>
+    public class AsyncLoadStatesCommand : BaseAsyncLoadCommand<IState, StateProperty>
     {
         //private static readonly ILog Logger = GameLogManager.GetLogger<LoadStatesCommand>();
 
@@ -25,6 +25,11 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
         protected override string Directory
         {
             get { return GameConstants.Directories.CommonStates; }
+        }
+
+        protected override LoadStatus LoadStatus
+        {
+            get { return LoadStatus.LoadStates; }
         }
     }
 }

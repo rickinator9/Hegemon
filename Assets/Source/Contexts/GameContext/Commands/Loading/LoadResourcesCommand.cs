@@ -7,7 +7,7 @@ using strange.extensions.command.impl;
 
 namespace Assets.Source.Contexts.GameContext.Commands.Loading
 {
-    public class LoadResourcesCommand : BaseLoadCommand<IResource, ResourceProperty>
+    public class AsyncLoadResourcesCommand : BaseAsyncLoadCommand<IResource, ResourceProperty>
     {
         #region From signal
 
@@ -23,6 +23,11 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
         protected override string Directory
         {
             get { return GameConstants.Directories.CommonResources; }
+        }
+
+        protected override LoadStatus LoadStatus
+        {
+            get { return LoadStatus.LoadResources; }
         }
     }
 }

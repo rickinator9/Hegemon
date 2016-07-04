@@ -28,9 +28,10 @@ namespace Assets.Source.Contexts.GameContext.Context
 			base.mapBindings();
 
 		    commandBinder.Bind<StartGameSignal>().To<StartGameCommand>();
-		    commandBinder.Bind<LoadResourcesSignal>().To<LoadResourcesCommand>();
-		    commandBinder.Bind<LoadStatesSignal>().To<LoadStatesCommand>();
-		    commandBinder.Bind<LoadCitiesSignal>().To<LoadCitiesCommand>();
+		    commandBinder.Bind<LoadSignal>().To<LoadCommand>();
+		    commandBinder.Bind<LoadResourcesSignal>().To<AsyncLoadResourcesCommand>();
+		    commandBinder.Bind<LoadStatesSignal>().To<AsyncLoadStatesCommand>();
+		    commandBinder.Bind<LoadCitiesSignal>().To<AsyncLoadCitiesCommand>();
 
 		    injectionBinder.Bind<IResource>().To<Resource>().ToName(GameContextKeys.NewInstance);
 		    injectionBinder.Bind<IState>().To<State>().ToName(GameContextKeys.NewInstance);
@@ -40,8 +41,11 @@ namespace Assets.Source.Contexts.GameContext.Context
 		    injectionBinder.Bind<BaseIdentifiableManager<IState>>().To<StateManager>().ToSingleton();
 		    injectionBinder.Bind<BaseIdentifiableManager<ICity>>().To<CityManager>().ToSingleton();
 
+		    injectionBinder.Bind<FrameSignal>().ToSingleton();
 		    injectionBinder.Bind<GameTickSignal>().ToSingleton();
+		    injectionBinder.Bind<LoadingDone>().ToSingleton();
 
+		    mediationBinder.Bind<FrameView>().To<FrameMediator>();
 		    mediationBinder.Bind<TimerView>().To<TimerMediator>();
 		}
 

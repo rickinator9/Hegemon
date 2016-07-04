@@ -2,6 +2,9 @@
 {
     public enum GameContextKeys
     {
-        NewInstance
+        NewInstance,
+
+        OverlayCanvas,
+        WorldSpaceCanvas
     }
 }

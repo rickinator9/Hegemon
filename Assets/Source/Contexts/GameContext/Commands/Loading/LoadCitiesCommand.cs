@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Assets.Source.Contexts.GameContext.Commands.Loading
 {
-    public class LoadCitiesCommand : BaseLoadCommand<ICity, CityProperty>
+    public class AsyncLoadCitiesCommand : BaseAsyncLoadCommand<ICity, CityProperty>
     {
         //private static readonly ILog Logger = GameLogManager.GetLogger<LoadCitiesCommand>();
 
@@ -18,7 +18,8 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
         #endregion
 
         #region Dependencies
-
+        [Inject(GameContextKeys.WorldSpaceCanvas)]
+        public GameObject WorldSpaceCanvas { get; set; }
         #endregion
 
         #region Dispatchers
@@ -30,16 +31,24 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
             get { return GameConstants.Directories.CommonCities; }
         }
 
-        public override void Execute()
+        protected override LoadStatus LoadStatus
         {
-            base.Execute();
+            get { return LoadStatus.LoadCities; }
+        }
+
+        protected override void OnFinish()
+        {
+            base.OnFinish();
 
             var cityPrefab = Resources.Load<GameObject>(@"Prefabs\City");
+            var cityUiPrefab = Resources.Load<GameObject>(@"Prefabs\UI\City Panel");
 
             foreach (var city in Manager.ToArray)
             {
-                Debug.Log(city.Position);
-                var cityGo = GameObject.Instantiate(cityPrefab, new Vector3(city.Position.x, 0f, city.Position.y), Quaternion.identity);
+                var vector3 = new Vector3(city.Position.x, 0f, city.Position.y);
+                var cityGo = GameObject.Instantiate(cityPrefab, vector3, Quaternion.identity);
+                var cityPanelGo = (GameObject)GameObject.Instantiate(cityUiPrefab, vector3, Quaternion.identity);
+                cityPanelGo.transform.SetParent(WorldSpaceCanvas.transform, true);
             }
         }
     }
