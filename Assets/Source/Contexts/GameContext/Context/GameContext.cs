@@ -32,6 +32,7 @@ namespace Assets.Source.Contexts.GameContext.Context
 		    commandBinder.Bind<LoadResourcesSignal>().To<AsyncLoadResourcesCommand>();
 		    commandBinder.Bind<LoadStatesSignal>().To<AsyncLoadStatesCommand>();
 		    commandBinder.Bind<LoadCitiesSignal>().To<AsyncLoadCitiesCommand>();
+		    commandBinder.Bind<TerrainInitialiseSignal>().To<TerrainInitialiseCommand>();
 
 		    injectionBinder.Bind<IResource>().To<Resource>().ToName(GameContextKeys.NewInstance);
 		    injectionBinder.Bind<IState>().To<State>().ToName(GameContextKeys.NewInstance);
@@ -43,7 +44,7 @@ namespace Assets.Source.Contexts.GameContext.Context
 
 		    injectionBinder.Bind<FrameSignal>().ToSingleton();
 		    injectionBinder.Bind<GameTickSignal>().ToSingleton();
-		    injectionBinder.Bind<LoadingDone>().ToSingleton();
+		    injectionBinder.Bind<LoadingDoneSignal>().ToSingleton();
 
 		    mediationBinder.Bind<FrameView>().To<FrameMediator>();
 		    mediationBinder.Bind<TimerView>().To<TimerMediator>();

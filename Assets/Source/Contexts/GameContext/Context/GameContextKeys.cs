@@ -5,6 +5,8 @@
         NewInstance,
 
         OverlayCanvas,
-        WorldSpaceCanvas
+        WorldSpaceCanvas,
+
+        TerrainComponent
     }
 }

@@ -15,7 +15,9 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
     {
         LoadCities,
         LoadStates,
-        LoadResources
+        LoadResources,
+
+        TerrainInitialise
     }
 
     public class LoadCommand : Command
@@ -27,7 +29,7 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
         public FrameSignal FrameSignal { get; set; }
 
         [Inject]
-        public LoadingDone LoadingDone { get; set; }
+        public LoadingDoneSignal LoadingDoneSignal { get; set; }
         #endregion
 
         #region Dependencies
@@ -43,34 +45,38 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
 
         [Inject]
         public LoadCitiesSignal LoadCitiesDispatcher { get; set; }
+
+        [Inject]
+        public TerrainInitialiseSignal TerrainInitialiseDispatcher { get; set; }
         #endregion
 
-        private IList<LoadCall> LoadCalls;
+        private IList<LoadCall> _loadCalls;
 
         public override void Execute()
         {
-            LoadCalls = new List<LoadCall>
+            _loadCalls = new List<LoadCall>
             {
                 new LoadCall {LoadStatus = LoadStatus.LoadStates, CallSignal = LoadStatesDispatcher, Dependencies = new HashSet<LoadStatus>()},
                 new LoadCall {LoadStatus = LoadStatus.LoadCities, CallSignal = LoadCitiesDispatcher, Dependencies = new HashSet<LoadStatus> {LoadStatus.LoadStates}},
-                new LoadCall {LoadStatus = LoadStatus.LoadResources, CallSignal = LoadResourcesDispatcher, Dependencies = new HashSet<LoadStatus>()}
+                new LoadCall {LoadStatus = LoadStatus.LoadResources, CallSignal = LoadResourcesDispatcher, Dependencies = new HashSet<LoadStatus>()},
+                new LoadCall {LoadStatus = LoadStatus.TerrainInitialise, CallSignal = TerrainInitialiseDispatcher, Dependencies = new HashSet<LoadStatus>()}
             };
 
             FrameSignal.AddListener(OnFrame);
-            LoadingDone.AddListener(OnLoadingDone);
+            LoadingDoneSignal.AddListener(OnLoadingDone);
 
             Retain();
         }
 
         private void OnFrame()
         {
-            if (LoadCalls.Count == 0)
+            if (_loadCalls.Count == 0)
             {
                 OnFinish();
                 return;
             }
 
-            foreach (var loadCall in LoadCalls)
+            foreach (var loadCall in _loadCalls)
             {
                 if (!loadCall.Called && loadCall.Dependencies.Count == 0)
                 {
@@ -83,24 +89,24 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
         private void OnFinish()
         {
             FrameSignal.RemoveListener(OnFrame);
-            LoadingDone.RemoveListener(OnLoadingDone);
+            LoadingDoneSignal.RemoveListener(OnLoadingDone);
 
             Release();
         }
 
         private void OnLoadingDone(LoadStatus loadStatus)
         {
-            for (var i = LoadCalls.Count - 1; i > 0; i--)
+            for (var i = _loadCalls.Count - 1; i > 0; i--)
             {
-                var loadCall = LoadCalls[i];
+                var loadCall = _loadCalls[i];
                 if (loadCall.Dependencies.Contains(loadStatus))
                     loadCall.Dependencies.Remove(loadStatus);
 
                 if(loadCall.LoadStatus == loadStatus)
-                    LoadCalls.RemoveAt(i);
+                    _loadCalls.RemoveAt(i);
             }
 
-            foreach (var loadCall in LoadCalls.Where(loadCall => loadCall.Dependencies.Contains(loadStatus)))
+            foreach (var loadCall in _loadCalls.Where(loadCall => loadCall.Dependencies.Contains(loadStatus)))
             {
                 loadCall.Dependencies.Remove(loadStatus);
             }

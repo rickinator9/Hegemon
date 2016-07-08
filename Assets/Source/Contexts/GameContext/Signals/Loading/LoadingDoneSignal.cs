@@ -6,7 +6,7 @@ namespace Assets.Source.Contexts.GameContext.Signals.Loading
     /// <summary>
     /// Sent when a loading command completed loading.
     /// </summary>
-    public class LoadingDone : Signal<LoadStatus>
+    public class LoadingDoneSignal : Signal<LoadStatus>
     {
          
     }

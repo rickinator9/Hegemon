@@ -29,7 +29,7 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
 
         #region Dispatchers
         [Inject]
-        public LoadingDone LoadingDoneDispatcher { get; set; }
+        public LoadingDoneSignal LoadingDoneSignalDispatcher { get; set; }
         #endregion
         
         /// <summary>
@@ -66,7 +66,7 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
 
         protected override void OnFinish()
         {
-            LoadingDoneDispatcher.Dispatch(LoadStatus);
+            LoadingDoneSignalDispatcher.Dispatch(LoadStatus);
         }
     }
 }
