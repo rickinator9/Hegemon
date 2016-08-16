@@ -7,13 +7,14 @@ using Assets.Source.Contexts.GameContext.Commands;
 using Assets.Source.Contexts.GameContext.Commands.Loading;
 using Assets.Source.Contexts.GameContext.Model;
 using Assets.Source.Contexts.GameContext.Model.Impl;
-using Assets.Source.Contexts.GameContext.Model.Managers;
 using Assets.Source.Contexts.GameContext.Model.Political;
 using Assets.Source.Contexts.GameContext.Model.Political.Impl;
 using Assets.Source.Contexts.GameContext.Signals;
 using Assets.Source.Contexts.GameContext.Signals.Loading;
 using Assets.Source.Contexts.GameContext.View;
 using Assets.Source.Contexts.GameContext.View.Mediator;
+using Assets.Source.Core.Model;
+using Assets.Source.Core.Model.Identifiable.Managers;
 using UnityEngine;
 
 namespace Assets.Source.Contexts.GameContext.Context
@@ -29,10 +30,11 @@ namespace Assets.Source.Contexts.GameContext.Context
 
 		    commandBinder.Bind<StartGameSignal>().To<StartGameCommand>();
 		    commandBinder.Bind<LoadSignal>().To<LoadCommand>();
-		    commandBinder.Bind<LoadResourcesSignal>().To<AsyncLoadResourcesCommand>();
-		    commandBinder.Bind<LoadStatesSignal>().To<AsyncLoadStatesCommand>();
-		    commandBinder.Bind<LoadCitiesSignal>().To<AsyncLoadCitiesCommand>();
+		    commandBinder.Bind<LoadResourcesSignal>().To<ParserLoadResourcesCommand>();
+		    commandBinder.Bind<LoadStatesSignal>().To<ParserLoadStatesCommand>();
+		    commandBinder.Bind<LoadCitiesSignal>().To<ParserLoadCitiesCommand>();
 		    commandBinder.Bind<TerrainInitialiseSignal>().To<TerrainInitialiseCommand>();
+		    commandBinder.Bind<LoadTerrainHeightmapSignal>().To<LoadTerrainHeightmapCommand>();
 
 		    injectionBinder.Bind<IResource>().To<Resource>().ToName(GameContextKeys.NewInstance);
 		    injectionBinder.Bind<IState>().To<State>().ToName(GameContextKeys.NewInstance);

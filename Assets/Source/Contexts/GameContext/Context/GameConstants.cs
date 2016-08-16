@@ -14,6 +14,7 @@ namespace Assets.Source.Contexts.GameContext.Context
             public static readonly string CommonResources = Common + @"Resources/";
             public static readonly string CommonStates = Common + @"States/";
 
+            public static readonly string Map = Root + @"Map/";
         } 
     }
 }

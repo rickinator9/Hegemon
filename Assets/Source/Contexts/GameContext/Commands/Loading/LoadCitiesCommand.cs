@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Assets.Source.Contexts.GameContext.Commands.Loading
 {
-    public class AsyncLoadCitiesCommand : BaseAsyncLoadCommand<ICity, CityProperty>
+    public class ParserLoadCitiesCommand : BaseParserLoadCommand<ICity, CityProperty>
     {
         //private static readonly ILog Logger = GameLogManager.GetLogger<LoadCitiesCommand>();
 

@@ -1,6 +1,6 @@
 ﻿using Assets.Source.Contexts.GameContext.Context;
-using Assets.Source.Contexts.GameContext.Model.Managers;
 using Assets.Source.Core.Model;
+using Assets.Source.Core.Model.Identifiable;
 using Assets.Source.Core.Parser.DataParser.Attributes;
 using Assets.Source.Core.Parser.DataParser.Properties;
 using strange.extensions.injector.api;

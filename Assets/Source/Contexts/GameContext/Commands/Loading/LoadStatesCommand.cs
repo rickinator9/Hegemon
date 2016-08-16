@@ -6,7 +6,7 @@ using Assets.Source.Contexts.GameContext.Model.Political.Impl;
 
 namespace Assets.Source.Contexts.GameContext.Commands.Loading
 {
-    public class AsyncLoadStatesCommand : BaseAsyncLoadCommand<IState, StateProperty>
+    public class ParserLoadStatesCommand : BaseParserLoadCommand<IState, StateProperty>
     {
         //private static readonly ILog Logger = GameLogManager.GetLogger<LoadStatesCommand>();
 

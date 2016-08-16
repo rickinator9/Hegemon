@@ -7,7 +7,7 @@ using strange.extensions.command.impl;
 
 namespace Assets.Source.Contexts.GameContext.Commands.Loading
 {
-    public class AsyncLoadResourcesCommand : BaseAsyncLoadCommand<IResource, ResourceProperty>
+    public class ParserLoadResourcesCommand : BaseParserLoadCommand<IResource, ResourceProperty>
     {
         #region From signal
 

@@ -1,7 +1,7 @@
 ﻿using Assets.Source.Contexts.GameContext.Model.Connections;
-using Assets.Source.Contexts.GameContext.Model.Managers;
 using Assets.Source.Contexts.GameContext.Model.Political;
 using Assets.Source.Core.Connections;
+using Assets.Source.Core.Model.Identifiable.Managers;
 using UnityEngine;
 
 namespace Assets.Source.Contexts.GameContext.Model.Impl

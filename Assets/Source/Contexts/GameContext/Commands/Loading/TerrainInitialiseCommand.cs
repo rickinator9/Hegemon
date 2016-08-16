@@ -38,7 +38,7 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
             var terrainColliderComponent = terrainGameObject.AddComponent<TerrainCollider>();
             terrainColliderComponent.terrainData = terrainComponent.terrainData;
 
-            //injectionBinder.Bind<Terrain>().ToValue(terrainComponent).ToName(GameContextKeys.TerrainComponent);
+            injectionBinder.Bind<Terrain>().ToValue(terrainComponent).ToName(GameContextKeys.TerrainComponent);
 
             LoadingDoneDispatcher.Dispatch(LoadStatus.TerrainInitialise);
         }

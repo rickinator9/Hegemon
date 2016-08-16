@@ -17,7 +17,8 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
         LoadStates,
         LoadResources,
 
-        TerrainInitialise
+        TerrainInitialise,
+        LoadTerrainHeightmap
     }
 
     public class LoadCommand : Command
@@ -48,8 +49,11 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
 
         [Inject]
         public TerrainInitialiseSignal TerrainInitialiseDispatcher { get; set; }
-        #endregion
 
+        [Inject]
+        public LoadTerrainHeightmapSignal LoadTerrainHeightmapDispatcher { get; set; }
+        #endregion
+        
         private IList<LoadCall> _loadCalls;
 
         public override void Execute()
@@ -59,7 +63,9 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
                 new LoadCall {LoadStatus = LoadStatus.LoadStates, CallSignal = LoadStatesDispatcher, Dependencies = new HashSet<LoadStatus>()},
                 new LoadCall {LoadStatus = LoadStatus.LoadCities, CallSignal = LoadCitiesDispatcher, Dependencies = new HashSet<LoadStatus> {LoadStatus.LoadStates}},
                 new LoadCall {LoadStatus = LoadStatus.LoadResources, CallSignal = LoadResourcesDispatcher, Dependencies = new HashSet<LoadStatus>()},
-                new LoadCall {LoadStatus = LoadStatus.TerrainInitialise, CallSignal = TerrainInitialiseDispatcher, Dependencies = new HashSet<LoadStatus>()}
+
+                new LoadCall {LoadStatus = LoadStatus.TerrainInitialise, CallSignal = TerrainInitialiseDispatcher, Dependencies = new HashSet<LoadStatus>()},
+                new LoadCall {LoadStatus = LoadStatus.LoadTerrainHeightmap, CallSignal = LoadTerrainHeightmapDispatcher, Dependencies = new HashSet<LoadStatus> {LoadStatus.TerrainInitialise}}
             };
 
             FrameSignal.AddListener(OnFrame);
@@ -76,8 +82,9 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
                 return;
             }
 
-            foreach (var loadCall in _loadCalls)
+            for (var i = _loadCalls.Count - 1; i > 0; i--)
             {
+                var loadCall = _loadCalls[i];
                 if (!loadCall.Called && loadCall.Dependencies.Count == 0)
                 {
                     loadCall.Called = true;
@@ -112,7 +119,7 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
             }
         }
 
-        private class LoadCall
+        public class LoadCall
         {
             public LoadStatus LoadStatus;
             public Signal CallSignal;

@@ -1,5 +1,5 @@
-﻿using Assets.Source.Contexts.GameContext.Model.Managers;
-using Assets.Source.Contexts.GameContext.Model.Political.Diplomacy;
+﻿using Assets.Source.Contexts.GameContext.Model.Political.Diplomacy;
+using Assets.Source.Core.Model.Identifiable.Managers;
 
 namespace Assets.Source.Contexts.GameContext.Model.Political
 {

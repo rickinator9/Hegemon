@@ -1,4 +1,4 @@
-﻿using Assets.Source.Contexts.GameContext.Model.Managers;
+﻿using Assets.Source.Core.Model.Identifiable.Managers;
 
 namespace Assets.Source.Contexts.GameContext.Model.Impl
 {

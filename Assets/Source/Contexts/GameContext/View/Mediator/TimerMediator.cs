@@ -1,7 +1,7 @@
 ﻿using Assets.Source.Contexts.GameContext.Model;
-using Assets.Source.Contexts.GameContext.Model.Managers;
 using Assets.Source.Contexts.GameContext.Model.Political;
 using Assets.Source.Contexts.GameContext.Signals;
+using Assets.Source.Core.Model.Identifiable.Managers;
 using Assets.Source.Utilities.IoC;
 using UnityEngine;
 
