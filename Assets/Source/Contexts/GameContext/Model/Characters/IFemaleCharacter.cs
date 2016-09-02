@@ -2,6 +2,8 @@
 {
     public interface IFemaleCharacter
     {
-         
+        IPregnancy Pregnancy { get; set; }
+
+        bool IsPregnant { get; }
     }
 }

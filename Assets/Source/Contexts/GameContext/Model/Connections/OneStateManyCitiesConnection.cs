@@ -8,17 +8,17 @@ namespace Assets.Source.Contexts.GameContext.Model.Connections
 {
     public class OneStateManyCitiesConnection : BaseOneToMany<IState, ICity>
     {
-        private static Dictionary<IState, OneStateManyCitiesConnection> connectionByState = new Dictionary<IState, OneStateManyCitiesConnection>();
+        private static readonly Dictionary<IState, OneStateManyCitiesConnection> ConnectionByState = new Dictionary<IState, OneStateManyCitiesConnection>();
 
         public OneStateManyCitiesConnection(IState state)
         {
             Value = state;
-            connectionByState[state] = this;
+            ConnectionByState[state] = this;
         }
 
         public static OneStateManyCitiesConnection GetByState(IState state)
         {
-            return connectionByState[state];
+            return ConnectionByState[state];
         }
     }
 }
