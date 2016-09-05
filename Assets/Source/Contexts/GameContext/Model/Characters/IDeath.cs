@@ -6,7 +6,7 @@ namespace Assets.Source.Contexts.GameContext.Model.Characters
     {
         IDate Date { get; set; }
 
-        IDeathReason DeathReason { get; set; }
+        ICauseOfDeath CauseOfDeath { get; set; }
 
         ICharacter Killer { get; set; }
     }

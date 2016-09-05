@@ -15,17 +15,17 @@ namespace Assets.Source.Contexts.GameContext.Model.Characters
 
     public class Dynasty : IDynasty
     {
-        private ICharacter _progrenitor;
+        private ICharacter _progenitor;
 
         public ICharacter Progenitor
         {
-            get { return _progrenitor; }
+            get { return _progenitor; }
             set
             {
-                if (_progrenitor != null)
+                if (_progenitor != null)
                     throw new OnlySettableOnceException();
 
-                _progrenitor = value;
+                _progenitor = value;
             }
         }
 
