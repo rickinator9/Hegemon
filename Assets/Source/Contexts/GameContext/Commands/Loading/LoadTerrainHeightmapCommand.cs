@@ -40,9 +40,15 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
         protected override void OnFinish()
         {
             LoadingDoneDispatcher.Dispatch(LoadStatus.LoadTerrainHeightmap);
+            InitialiseTerrain();
+            AddWaterPlane();
+        }
+
+        private void InitialiseTerrain()
+        {
             if (binaryImageData == null) return;
-            
-            var texture = new Texture2D(1,1);
+
+            var texture = new Texture2D(1, 1);
             texture.LoadImage(binaryImageData);
 
             var width = texture.width;
@@ -53,17 +59,17 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
             var elevationScalar = 0.085f;
 
             var heightData = new float[width, height];
-            for(var x = 0; x < width; x++)
+            for (var x = 0; x < width; x++)
             {
-                for(var y = 0; y < height; y++)
+                for (var y = 0; y < height; y++)
                 {
                     var color = texture.GetPixel(x, y);
-                    var elevation = (color.r + color.g + color.b)/3;
-                    if (elevation*255 > 87)
+                    var elevation = (color.r + color.g + color.b) / 3;
+                    if (elevation * 255 > 87)
                     {
-                        var elevationAboveSeaLevel = (elevation*255 - 87)/255;
-                        var scaledElevation = elevationAboveSeaLevel*elevationScalar;
-                        elevation = 87f/255f + scaledElevation;
+                        var elevationAboveSeaLevel = (elevation * 255 - 87) / 255;
+                        var scaledElevation = elevationAboveSeaLevel * elevationScalar;
+                        elevation = 87f / 255f + scaledElevation;
                     }
                     heightData[width - x - 1, y] = elevation;
                 }
@@ -73,6 +79,16 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
             terrainData.heightmapResolution = width;
             terrainData.size = new Vector3(width, 255, height);
             terrainData.SetHeights(0, 0, heightData);
+        }
+
+        private void AddWaterPlane()
+        {
+            var plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
+            plane.GetComponent<MeshRenderer>().material.color = new Color(67f/255f, 36f/255f, 197f/255f);
+
+            var transform = plane.transform;
+            transform.position = new Vector3(800, 86.99f, 800);
+            transform.localScale = new Vector3(160, 1, 160);
         }
     }
 }
