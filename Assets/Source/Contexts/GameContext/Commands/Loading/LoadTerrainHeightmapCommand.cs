@@ -42,6 +42,7 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
             LoadingDoneDispatcher.Dispatch(LoadStatus.LoadTerrainHeightmap);
             InitialiseTerrain();
             AddWaterPlane();
+            AddLight();
         }
 
         private void InitialiseTerrain()
@@ -89,6 +90,19 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
             var transform = plane.transform;
             transform.position = new Vector3(800, 86.99f, 800);
             transform.localScale = new Vector3(160, 1, 160);
+        }
+
+        private void AddLight()
+        {
+            var lightGo = new GameObject("Light");
+            var light = lightGo.AddComponent<Light>();
+
+            light.type = LightType.Directional;
+            light.intensity = 1f;
+            light.bounceIntensity = 1f;
+
+            var transform = lightGo.transform;
+            transform.rotation = Quaternion.Euler(new Vector3(50f, -30f, 0f));
         }
     }
 }
