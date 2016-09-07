@@ -45,7 +45,6 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
 
         protected BaseParserLoadCommand()
         {
-            Debug.Log("BaseAsyncLoadCommand");
         } 
 
         protected override void Run()
@@ -62,10 +61,10 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
                 if (parserObject == null)
                     continue;
 
-                var resourceProperty = new TProperty();
-                resourceProperty.LoadParserObject(identifier, parserObject);
+                var property = new TProperty();
+                property.LoadParserObject(identifier, parserObject);
 
-                var model = resourceProperty.PopulateModel(injectionBinder);
+                var model = property.PopulateModel(injectionBinder);
                 Manager.Set(model);
             }
         }

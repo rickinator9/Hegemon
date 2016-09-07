@@ -49,6 +49,8 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
                 var cityGo = GameObject.Instantiate(cityPrefab, vector3, Quaternion.identity);
                 var cityPanelGo = (GameObject)GameObject.Instantiate(cityUiPrefab, vector3, Quaternion.identity);
                 cityPanelGo.transform.SetParent(WorldSpaceCanvas.transform, true);
+
+                Debug.Log("Created city " + city.Identifier);
             }
         }
     }

@@ -15,7 +15,6 @@ namespace Assets.Source.Core.Parser.DataParser.Converters
 
         protected Converter()
         {
-            Debug.Log(Type.FullName);
             if(ConverterByType == null)
                 ConverterByType = new Dictionary<Type, Converter>();
 

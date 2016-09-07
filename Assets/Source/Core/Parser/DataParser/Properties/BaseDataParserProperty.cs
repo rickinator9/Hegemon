@@ -21,7 +21,6 @@ namespace Assets.Source.Core.Parser.DataParser.Properties
         protected void TryProcessProperties(ParserObject parserObject)
         {
             var properties = GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance);
-            Debug.Log(properties.Length);
             foreach (var property in properties)
             {
                 if (ObjectHasProperty(parserObject, property))
@@ -34,7 +33,6 @@ namespace Assets.Source.Core.Parser.DataParser.Properties
                         continue;
 
                     var value = converter.Convert(parserType);
-                    Debug.Log(property.Name + ": " + value);
                     if (converter.IsValueInvalid(value))
                     {
                         if (PropertyHasDefaultValue(property))
