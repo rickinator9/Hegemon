@@ -82,7 +82,7 @@ namespace Assets.Source.Contexts.GameContext.Commands.Loading
                 return;
             }
 
-            for (var i = _loadCalls.Count - 1; i > 0; i--)
+            for (var i = _loadCalls.Count - 1; i >= 0; i--)
             {
                 var loadCall = _loadCalls[i];
                 if (!loadCall.Called && loadCall.Dependencies.Count == 0)
