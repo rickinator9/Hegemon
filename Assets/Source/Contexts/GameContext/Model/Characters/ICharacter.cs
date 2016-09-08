@@ -4,6 +4,7 @@ using Assets.Source.Contexts.GameContext.Model.Connections;
 using Assets.Source.Contexts.GameContext.Model.Dates;
 using Assets.Source.Core.Connections;
 using Assets.Source.Core.Model.Identifiable;
+using JetBrains.Annotations;
 
 namespace Assets.Source.Contexts.GameContext.Model.Characters
 {
@@ -14,10 +15,16 @@ namespace Assets.Source.Contexts.GameContext.Model.Characters
         string FirstName { get; set; }
         IDynasty Dynasty { get; set; }
 
+        #region Character relations
         ICharacter Father { get; set; }
         ICharacter Mother { get; set; }
         ICharacter[] Children { get; }
         ICharacter[] Siblings { get; }
+
+        IList<IMarriage> Marriages { get; }
+        ICharacter[] Spouses { get; }
+        bool IsMarried { get; }
+        #endregion
 
         IDate BirthDate { get; set; }
         IDeath Death { get; set; }
@@ -31,6 +38,7 @@ namespace Assets.Source.Contexts.GameContext.Model.Characters
         public string FirstName { get; set; }
         public IDynasty Dynasty { get; set; }
 
+        #region Character relations
         private IOne<ICharacter, ICharacter> _father;
         public ICharacter Father
         {
@@ -89,6 +97,34 @@ namespace Assets.Source.Contexts.GameContext.Model.Characters
                 return hashSet.ToArray();
             }
         }
+
+        private IList<IMarriage> _marriages; 
+        public IList<IMarriage> Marriages
+        {
+            get { return _marriages ?? (_marriages = new List<IMarriage>()); }
+        }
+
+        public ICharacter[] Spouses
+        {
+            get
+            {
+                var hashSet = new HashSet<ICharacter>();
+                foreach (var marriage in Marriages)
+                {
+                    if (marriage.IsActive)
+                        hashSet.Add(marriage.GetSpouseOf(this));
+                }
+
+                return hashSet.ToArray();
+            }
+        }
+
+        public bool IsMarried
+        {
+            get { return Spouses.Length > 0; }
+        }
+
+        #endregion
 
         public IDate BirthDate { get; set; }
         public IDeath Death { get; set; }
