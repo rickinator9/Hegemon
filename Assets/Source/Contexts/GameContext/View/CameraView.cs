@@ -10,7 +10,20 @@ public class CameraView : View {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update ()
+	{
+	    float x = 0;
+	    float z = 0;
+	    if (Input.GetKey(KeyCode.W))
+	        z++;
+        else if (Input.GetKey(KeyCode.S))
+            z--;
+
+	    if (Input.GetKey(KeyCode.A))
+	        x++;
+        else if (Input.GetKey(KeyCode.D))
+            x--;
+
+        transform.position += new Vector3(x, 0, z);
 	}
 }
