@@ -1,6 +1,7 @@
 ﻿using Assets.Source.Contexts.GameContext.Context;
 using Assets.Source.Core.Model;
 using Assets.Source.Core.Model.Identifiable;
+using Assets.Source.Core.Model.Identifiable.Managers;
 using Assets.Source.Core.Parser.DataParser.Attributes;
 using Assets.Source.Core.Parser.DataParser.Properties;
 using strange.extensions.injector.api;
@@ -26,6 +27,52 @@ namespace Assets.Source.Contexts.GameContext.Model
         void AddDemand(float demand);
 
         void SetData(string resourceName, float basePrice);
+    }
+    public class Resource : IResource
+    {
+        public string ResourceName { get; private set; }
+        public float BasePrice { get; set; }
+
+        public float Price { get; private set; }
+
+        public float Supply { get; private set; }
+        public float Demand { get; private set; }
+        public void UpdateForDayEnd()
+        {
+            Price = BasePrice * Demand / Supply;
+        }
+
+        public void AddSupply(float supply)
+        {
+            Supply += supply;
+        }
+
+        public void AddDemand(float demand)
+        {
+            Demand += demand;
+        }
+
+        public void SetData(string resourceName, float basePrice)
+        {
+            ResourceName = resourceName;
+            BasePrice = basePrice;
+        }
+
+        private string _id;
+
+        public string Identifier
+        {
+            get { return _id; }
+            set
+            {
+                if (string.IsNullOrEmpty(_id))
+                    _id = value;
+            }
+        }
+    }
+
+    public class ResourceManager : IdentifiableManager<IResource>
+    {
     }
 
     public class ResourceProperty : BaseDataParserProperty<IResource>

@@ -1,5 +1,7 @@
 ﻿using Assets.Source.Contexts.GameContext.Context;
+using Assets.Source.Contexts.GameContext.Model.Connections;
 using Assets.Source.Contexts.GameContext.Model.Political;
+using Assets.Source.Core.Connections;
 using Assets.Source.Core.Model;
 using Assets.Source.Core.Model.Identifiable;
 using Assets.Source.Core.Model.Identifiable.Managers;
@@ -18,6 +20,33 @@ namespace Assets.Source.Contexts.GameContext.Model
         Vector2 Position { get; set; }
 
         bool IsCapital { get; }
+    }
+    public class City : ICity
+    {
+        public string Identifier { get; set; }
+        public ICity MotherCity { get; set; }
+
+        private IOne<IState, ICity> _oneState;
+        public IState State
+        {
+            get { return _oneState != null ? _oneState.Value : null; }
+            set
+            {
+                if (_oneState != null)
+                    _oneState.Unregister(this);
+                _oneState = OneStateManyCitiesConnection.GetByState(value);
+                if (_oneState != null)
+                    _oneState.Register(this);
+            }
+        }
+
+        public Vector2 Position { get; set; }
+
+        public bool IsCapital { get { return State.Capital == this; } }
+    }
+
+    public class CityManager : IdentifiableManager<ICity>
+    {
     }
 
     public class CityProperty : BaseDataParserProperty<ICity>
