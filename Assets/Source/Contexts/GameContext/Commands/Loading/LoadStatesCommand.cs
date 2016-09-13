@@ -1,6 +1,5 @@
 ﻿using Assets.Source.Contexts.GameContext.Context;
 using Assets.Source.Contexts.GameContext.Model.Political;
-using Assets.Source.Contexts.GameContext.Model.Political.Impl;
 //using Assets.Source.Utilities.Log;
 //using log4net;
 
