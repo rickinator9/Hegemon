@@ -14,6 +14,8 @@ namespace Assets.Source.Contexts.GameContext.Model.Political
     {
         ILeague League { get; set; }
 
+        IGovernment Government { get; set; }
+
         ICity[] Cities { get; }
 
         IArmy[] Armies { get; }
@@ -22,7 +24,7 @@ namespace Assets.Source.Contexts.GameContext.Model.Political
     {
         public string Identifier { get; set; }
         public string Name { get; set; }
-        public IList<ITreaty> Treaties { get; private set; }
+        public ITreaty[] Treaties { get; private set; }
         public ICity Capital { get; set; }
 
         private IOne<ILeague, IState> _oneLeague;
@@ -37,6 +39,7 @@ namespace Assets.Source.Contexts.GameContext.Model.Political
         public State()
         {
             _manyCities = new OneStateManyCitiesConnection(this);
+            _manyArmies = new OneStateManyArmiesConnection(this);
         }
     }
 

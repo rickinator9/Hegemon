@@ -9,7 +9,7 @@ namespace Assets.Source.Contexts.GameContext.Model.Political
     {
         string Name { get; set; }
 
-        IList<ITreaty> Treaties { get; }  
+        ITreaty[] Treaties { get; }  
 
         ICity Capital { get; set; }
     }
