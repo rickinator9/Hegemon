@@ -1,7 +1,7 @@
 ﻿namespace Assets.Source.Contexts.GameContext.Model.Political.Diplomacy
 {
-    public interface ITreaty
+    public interface ITreatyTerm
     {
-        IPoliticalEntity[] Signatories { get; set; }
+         
     }
 }

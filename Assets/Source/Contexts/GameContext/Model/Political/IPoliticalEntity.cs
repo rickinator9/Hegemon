@@ -12,5 +12,8 @@ namespace Assets.Source.Contexts.GameContext.Model.Political
         ITreaty[] Treaties { get; }  
 
         ICity Capital { get; set; }
+
+        IState Liege { get; set; }
+        bool IsVassal { get; }
     }
 }
