@@ -1,9 +1,20 @@
 ﻿namespace Assets.Source.Core.Connections
 {
-    public interface IMany<TMany, TThis>
+    public interface IManyDominant<TDominant, out TSubmissive>
     {
-         TMany[] Values { get; }
+        TDominant Value { get; }
 
-         TThis Value { get; set; }
+        TSubmissive[] GetSubmissivesForDominant(TDominant dominant);
+    }
+
+    public interface IManySubmissive<TDominant, in TSubmissive>
+    {
+        void AddDominant(TDominant dominant, TSubmissive submissive);
+
+        void RemoveDominant(TDominant dominant, TSubmissive submissive);
+
+        TDominant GetDominantForSubmissive(TSubmissive submissive);
+
+        TDominant[] GetDominantsForSubmissive(TSubmissive submissive);
     }
 }

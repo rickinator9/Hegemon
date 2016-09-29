@@ -2,8 +2,9 @@
 {
     public interface IMonth
     {
-        int Days { get; }
-        int LeapYearDays { get; }
-        int MonthNumber { get; }
+        int Days { get; set; }
+        int LeapYearDays { get; set; }
+        int MonthNumber { get; set; }
+        string MonthName { get; set; }
     }
 }

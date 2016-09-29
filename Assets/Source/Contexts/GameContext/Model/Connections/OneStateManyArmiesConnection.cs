@@ -5,12 +5,13 @@ using Assets.Source.Core.Connections;
 
 namespace Assets.Source.Contexts.GameContext.Model.Connections
 {
-    public class OneStateManyArmiesConnection : BaseOneToMany<IState, IArmy>
+    public class OneStateManyArmiesConnection : BaseOneToMany<IArmy, IState>
     {
         private static IDictionary<IState, OneStateManyArmiesConnection> ConnectionByState = new Dictionary<IState, OneStateManyArmiesConnection>();  
 
         public OneStateManyArmiesConnection(IState state)
         {
+            _value = state;
             ConnectionByState[state] = this;
         }
 

@@ -6,13 +6,13 @@ using Assets.Source.Core.Connections;
 
 namespace Assets.Source.Contexts.GameContext.Model.Connections
 {
-    public class OneStateManyCitiesConnection : BaseOneToMany<IState, ICity>
+    public class OneStateManyCitiesConnection : BaseOneToMany<ICity, IState>
     {
         private static readonly Dictionary<IState, OneStateManyCitiesConnection> ConnectionByState = new Dictionary<IState, OneStateManyCitiesConnection>();
 
         public OneStateManyCitiesConnection(IState state)
         {
-            Value = state;
+            _value = state;
             ConnectionByState[state] = this;
         }
 

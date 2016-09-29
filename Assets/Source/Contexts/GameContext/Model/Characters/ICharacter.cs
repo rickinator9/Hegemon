@@ -2,6 +2,7 @@
 using System.Linq;
 using Assets.Source.Contexts.GameContext.Model.Connections;
 using Assets.Source.Contexts.GameContext.Model.Dates;
+using Assets.Source.Contexts.GameContext.Model.Political;
 using Assets.Source.Core.Connections;
 using Assets.Source.Core.Model.Identifiable;
 using JetBrains.Annotations;
@@ -26,9 +27,14 @@ namespace Assets.Source.Contexts.GameContext.Model.Characters
         bool IsMarried { get; }
         #endregion
 
+        #region Character age
         IDate BirthDate { get; set; }
         IDeath Death { get; set; }
         bool IsAlive { get; }
+        int Age { get; }
+        #endregion
+
+        IState State { get; set; }
     }
 
     public abstract class BaseCharacter : ICharacter
@@ -39,10 +45,10 @@ namespace Assets.Source.Contexts.GameContext.Model.Characters
         public IDynasty Dynasty { get; set; }
 
         #region Character relations
-        private IOne<ICharacter, ICharacter> _father;
+        private IOneSubmissive<ICharacter, ICharacter> _father;
         public ICharacter Father
         {
-            get { return _father == null ? null : _father.Value; }
+            get { return _father == null ? null : _father.GetDominantForSubmissive(this); }
             set
             {
                 if (_father != null)
@@ -53,10 +59,10 @@ namespace Assets.Source.Contexts.GameContext.Model.Characters
             }
         }
 
-        private IOne<ICharacter, ICharacter> _mother;
+        private IOneSubmissive<ICharacter, ICharacter> _mother;
         public ICharacter Mother
         {
-            get { return _mother == null ? null : _mother.Value; }
+            get { return _mother == null ? null : _mother.GetDominantForSubmissive(this); }
             set
             {
                 if (_mother != null)
@@ -67,10 +73,10 @@ namespace Assets.Source.Contexts.GameContext.Model.Characters
             }
         }
 
-        private IMany<ICharacter, ICharacter> _children;
+        private IManySubmissive<ICharacter, ICharacter> _children;
         public ICharacter[] Children
         {
-            get { return _children.Values; }
+            get { return _children.GetDominantsForSubmissive(this); }
         }
 
         public ICharacter[] Siblings
@@ -133,5 +139,8 @@ namespace Assets.Source.Contexts.GameContext.Model.Characters
         {
             get { return Death == null; }
         }
+
+        public int Age { get; private set; }
+        public IState State { get; set; }
     }
 }

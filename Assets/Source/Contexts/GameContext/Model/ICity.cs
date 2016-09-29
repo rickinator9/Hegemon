@@ -26,10 +26,10 @@ namespace Assets.Source.Contexts.GameContext.Model
         public string Identifier { get; set; }
         public ICity MotherCity { get; set; }
 
-        private IOne<IState, ICity> _oneState;
+        private IOneSubmissive<IState, ICity> _oneState;
         public IState State
         {
-            get { return _oneState != null ? _oneState.Value : null; }
+            get { return _oneState != null ? _oneState.GetDominantForSubmissive(this) : null; }
             set
             {
                 if (_oneState != null)

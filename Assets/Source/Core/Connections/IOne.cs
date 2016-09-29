@@ -1,11 +1,20 @@
 ﻿namespace Assets.Source.Core.Connections
 {
-    public interface IOne<TOne, TThis>
+    public interface IOneDominant<TDominant, out TSubmissive>
     {
-        void Register(TThis value);
+        TDominant Value { get; }
 
-        TOne Unregister(TThis value);
-        
-        TOne Value { get; } 
+        TSubmissive GetSubmissiveForDominant(TDominant submissive);
+
+        TSubmissive[] GetSubmissivesForDominant(TDominant submissive);
+    }
+
+    public interface IOneSubmissive<TDominant, in TSubmissive>
+    {
+        void Register(TSubmissive submissive);
+
+        void Unregister(TSubmissive submissive);
+
+        TDominant GetDominantForSubmissive(TSubmissive submissive);
     }
 }

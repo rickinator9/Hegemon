@@ -10,7 +10,7 @@ namespace Assets.Source.Contexts.GameContext.Model.Connections
 
         public OneCharacterManyCharacters(ICharacter parent)
         {
-            Value = parent;
+            _value = parent;
             ConnectionByParent[parent] = this;
         }
 

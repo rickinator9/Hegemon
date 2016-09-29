@@ -4,36 +4,39 @@ using Assets.Source.Contexts.GameContext.Model;
 
 namespace Assets.Source.Core.Connections
 {
-    public class BaseOneToMany<TOne, TMany> : IOne<TOne, TMany>, IMany<TMany, TOne>
+    public class BaseOneToMany<TOne, TMany> : IOneSubmissive<TMany, TOne>, IManyDominant<TMany, TOne>
     {
-        private readonly IList<TMany> _values;
-        public TMany[] Values { get { return _values.ToArray(); } }
-
-        public void Register(TMany value)
-        {
-            _values.Add(value);
-        }
-
-        public TOne Unregister(TMany value)
-        {
-            _values.Remove(value);
-            return Value;
-        }
-
-        private TOne _value;
-        public TOne Value
-        {
-            get { return _value; }
-            set
-            {
-                if (_value == null)
-                    _value = value;
-            }
-        }
+        private readonly IList<TOne> _values;
+        protected TMany _value;
 
         protected BaseOneToMany() 
         {
-            _values = new List<TMany>();
+            _values = new List<TOne>();
+        }
+
+        public void Register(TOne submissive)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Unregister(TOne submissive)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public TMany GetDominantForSubmissive(TOne submissive)
+        {
+            return _value;
+        }
+
+        public TMany Value
+        {
+            get { return _value; }
+        }
+
+        public TOne[] GetSubmissivesForDominant(TMany dominant)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

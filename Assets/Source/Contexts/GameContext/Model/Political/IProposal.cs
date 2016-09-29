@@ -7,7 +7,5 @@ namespace Assets.Source.Contexts.GameContext.Model.Political
         string Name { get; set; }
 
         ICharacter Submitter { get; set; }
-
-        delegate OnSuccess;
     }
 }

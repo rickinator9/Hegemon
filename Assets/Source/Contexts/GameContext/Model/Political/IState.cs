@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Source.Contexts.GameContext.Context;
+using Assets.Source.Contexts.GameContext.Model.Characters;
 using Assets.Source.Contexts.GameContext.Model.Connections;
 using Assets.Source.Contexts.GameContext.Model.Military;
 using Assets.Source.Contexts.GameContext.Model.Political.Diplomacy;
@@ -17,6 +18,8 @@ namespace Assets.Source.Contexts.GameContext.Model.Political
         IGovernment Government { get; set; }
 
         ICity[] Cities { get; }
+
+        ICharacter[] Characters { get; }
 
         IArmy[] Armies { get; }
 
@@ -37,20 +40,21 @@ namespace Assets.Source.Contexts.GameContext.Model.Political
             get { return Liege != null; }
         }
 
-        private IOne<ILeague, IState> _oneLeague;
+        private IOneSubmissive<ILeague, IState> _oneLeague;
         public ILeague League { get; set; }
         public IGovernment Government { get; set; }
 
-        private readonly IMany<ICity, IState> _manyCities;
-        public ICity[] Cities { get { return _manyCities.Values; } }
+        private readonly IManyDominant<IState, ICity> _manyCities;
+        public ICity[] Cities { get { return _manyCities.GetSubmissivesForDominant(this); } }
+        public ICharacter[] Characters { get; private set; }
 
-        private readonly IMany<IArmy, IState> _manyArmies; 
-        public IArmy[] Armies { get { return _manyArmies.Values; } }
+        private readonly IManyDominant<IState, IArmy> _manyArmies; 
+        public IArmy[] Armies { get { return _manyArmies.GetSubmissivesForDominant(this); } }
 
-        private readonly IMany<IPoliticalEntity, IState> _manyVassals;
+        private readonly IManyDominant<IState, IPoliticalEntity> _manyVassals;
         public IPoliticalEntity[] Vassals
         {
-            get { return _manyVassals.Values; }
+            get { return _manyVassals.GetSubmissivesForDominant(this); }
         }
 
         public State()

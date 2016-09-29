@@ -2,6 +2,6 @@
 {
     public interface ITreatyTerm
     {
-         
+        ITreaty Treaty { get; set; }
     }
 }
