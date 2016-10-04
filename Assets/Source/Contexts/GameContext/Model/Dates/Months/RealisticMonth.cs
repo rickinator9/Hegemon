@@ -2,9 +2,9 @@
 {
     public class RealisticMonth : IMonth
     {
-        public int Days { get; set; }
-        public int LeapYearDays { get; set; }
-        public int MonthNumber { get; set; }
+        public byte Days { get; set; }
+        public byte LeapYearDays { get; set; }
+        public byte MonthNumber { get; set; }
         public string MonthName { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Contexts.GameContext.Model.Dates.Months;
+using UnityEngine;
 
 namespace Assets.Source.Contexts.GameContext.Model.Dates
 {
@@ -23,6 +24,15 @@ namespace Assets.Source.Contexts.GameContext.Model.Dates
             get { return IsLeapYear ? 366 : 365; }
         }
 
+        public RealisticDate(byte day, IMonth month, int year)
+        {
+            Day = day;
+            Month = month;
+            Year = year;
+        }
+
+        public RealisticDate(byte day, byte month, int year) : this(day, MonthManager.Instance.Months[month-1], year) { }
+
         public IDate AddDays(int days)
         {
             throw new System.NotImplementedException();
@@ -46,12 +56,17 @@ namespace Assets.Source.Contexts.GameContext.Model.Dates
 
         public IDate AddYears(int years)
         {
-            throw new System.NotImplementedException();
+            return DateManager.Instance.GetDate(Day, Month, Year - years);
         }
 
         public IDate RemoveYears(int years)
         {
-            throw new System.NotImplementedException();
+            return DateManager.Instance.GetDate(Day, Month, Year - years);
+        }
+
+        public override string ToString()
+        {
+            return Day + " " + Month.MonthName + ", " + Year;
         }
     }
 }
